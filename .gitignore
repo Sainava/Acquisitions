@@ -1,2 +1,6 @@
-node_modules/ 
+node_modules/
+
+# Ignore environment files, but keep the example template tracked
+.env
 .env.*
+!.env.example
