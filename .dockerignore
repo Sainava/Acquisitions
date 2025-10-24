@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Docker artifacts
+.docker/
+Dockerfile*
+
+# Env files (mounted via env_file)
+.env
+.env.*
+!.env.example
+
+# Drizzle artifacts
+.drizzle/
+
+# Neon Local metadata
+.neon_local/

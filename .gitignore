@@ -8,3 +8,8 @@ node_modules/
 # Logs
 logs/
 *.log
+
+# Neon Local metadata
+.neon_local/
+
+Docker_documentation.md

@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    container_name: acquisitions-app
+    command: node src/index.js
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    # Environment variables are provided via .env.production
+    # DATABASE_URL should come from .env.production or your deployment platform secrets
+    # No Neon Local or DB container in production; connect to Neon Cloud directly
