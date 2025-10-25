@@ -1,6 +1,6 @@
 import express from 'express';
 import logger from '#config/logger.js';
-import helmet from "helmet";
+import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -41,8 +41,15 @@ app.get('/api', (req, res) => {
 app.use('/api/auth', authRoutes);//.  /api/auth/sign-up, /api/auth/sign-in, /api/auth/sign-out
 app.use('/api/users', userRoutes);
 
-app.use((req,res)=>{
-  res.status(404).json({error:'Route not found'});
-})
+
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+
+// General error handler (must be last)
+app.use((err, req, res) => {
+  logger.error(err.stack || err.message || err);
+  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+});
 
 export default app;
