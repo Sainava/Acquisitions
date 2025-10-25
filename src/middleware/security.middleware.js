@@ -3,6 +3,10 @@ import { slidingWindow } from "@arcjet/node";
 import logger from "#config/logger.js";
 
 const securityMiddleware = async (req, res, next) => {
+    // Ensure req.ip is set in test environment to avoid ArcJet fingerprinting errors
+    if (process.env.NODE_ENV === 'test') {
+        req.ip = req.ip || '127.0.0.1';
+    }
     try{
         const role=req.user?.role || 'guest';
 
