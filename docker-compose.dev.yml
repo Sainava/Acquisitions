@@ -3,7 +3,7 @@ services:
     image: neondatabase/neon_local:latest
     container_name: neon-local
     ports:
-      - "5432:5432"
+      - '5432:5432'
     env_file:
       - .env.development
   app:
@@ -13,7 +13,7 @@ services:
     container_name: acquisitions-app-dev
     command: npm run dev
     ports:
-      - "3000:3000"
+      - '3000:3000'
     env_file:
       - .env.development
     volumes:

@@ -22,9 +22,9 @@ const aj = arcjet({
     // Rate limit requests using a sliding window algorithm
     slidingWindow({
       mode: arcjetMode,
-      interval : '2s',
-      max:5, // Max 5 requests every 2 seconds
-    }),   
+      interval: '2s',
+      max: 5, // Max 5 requests every 2 seconds
+    }),
   ],
 });
 

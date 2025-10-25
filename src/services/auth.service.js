@@ -4,8 +4,7 @@ import bcrypt from 'bcrypt';
 import { eq } from 'drizzle-orm';
 import { users } from '#models/user.model.js';
 
-
-export const hashPassword = async (password) => {
+export const hashPassword = async password => {
   try {
     return await bcrypt.hash(password, 10);
   } catch (e) {
@@ -92,7 +91,10 @@ export const authenticateUser = async ({ email }) => {
     return user;
   } catch (e) {
     logger.error('Error authenticating user', e);
-    if (e && (e.message === 'User not found' || e.message === 'Invalid credentials')) {
+    if (
+      e &&
+      (e.message === 'User not found' || e.message === 'Invalid credentials')
+    ) {
       throw e;
     }
     throw new Error('Error authenticating user');

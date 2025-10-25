@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   app:
@@ -7,7 +7,7 @@ services:
     container_name: acquisitions-app
     command: node src/index.js
     ports:
-      - "3000:3000"
+      - '3000:3000'
     env_file:
       - .env.production
     # Environment variables are provided via .env.production

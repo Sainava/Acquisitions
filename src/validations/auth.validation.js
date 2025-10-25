@@ -5,7 +5,7 @@ const emailSchema = z
   .email('Invalid email address')
   .max(255)
   .trim()
-  .transform((v) => v.toLowerCase());
+  .transform(v => v.toLowerCase());
 
 export const signUpSchema = z.object({
   name: z.string().min(2).max(255).trim(),
@@ -18,4 +18,3 @@ export const signInSchema = z.object({
   email: emailSchema,
   password: z.string().min(6).max(128),
 });
-
