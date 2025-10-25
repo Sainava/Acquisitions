@@ -48,6 +48,7 @@ jobs:
             echo "Coverage report generated." >> $GITHUB_STEP_SUMMARY
           else
             echo "No coverage report found." >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Annotate test failures
         if: failure()

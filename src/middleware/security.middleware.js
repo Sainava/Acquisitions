@@ -44,12 +44,10 @@ const securityMiddleware = async (req, res, next) => {
         path: req.path,
         reason: decision.reason.toString(),
       });
-      return res
-        .status(403)
-        .json({
-          error: 'Forbidden',
-          message: 'Automated request are not allowed',
-        });
+      return res.status(403).json({
+        error: 'Forbidden',
+        message: 'Automated request are not allowed',
+      });
     }
 
     if (decision.isDenied() && decision.reason.isShield()) {
@@ -60,12 +58,10 @@ const securityMiddleware = async (req, res, next) => {
         method: req.method,
         reason: decision.reason.toString(),
       });
-      return res
-        .status(403)
-        .json({
-          error: 'Forbidden',
-          message: 'Request blocked due to security policy',
-        });
+      return res.status(403).json({
+        error: 'Forbidden',
+        message: 'Request blocked due to security policy',
+      });
     }
 
     if (decision.isDenied() && decision.reason.isRateLimit()) {
@@ -76,23 +72,19 @@ const securityMiddleware = async (req, res, next) => {
         method: req.method,
         reason: decision.reason.toString(),
       });
-      return res
-        .status(403)
-        .json({
-          error: 'Forbidden',
-          message: 'Too many requests, please try again later',
-        });
+      return res.status(403).json({
+        error: 'Forbidden',
+        message: 'Too many requests, please try again later',
+      });
     }
 
     next();
   } catch (e) {
     console.error('Arcjet middleware error', e);
-    res
-      .status(500)
-      .json({
-        error: 'Internal Server Error',
-        message: 'Something went wrong in security middleware',
-      });
+    res.status(500).json({
+      error: 'Internal Server Error',
+      message: 'Something went wrong in security middleware',
+    });
   }
 };
 
