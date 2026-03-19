@@ -9,12 +9,14 @@ A **production-ready**, secure Node.js/Express REST API for user authentication,
 ## ✨ Core Features
 
 ### 🔑 **Authentication & Authorization**
+
 - **JWT-based auth** with secure HTTP-only cookies (15-min expiry, SameSite=Strict)
 - **Password hashing** via bcrypt (10 rounds)
 - **Role-based access control (RBAC)**: Admin, User, Guest
 - **Token verification & expiration** handling on protected routes
 
 ### 🛡️ **Advanced Security**
+
 - **Arcjet integration**: Multi-layer threat detection
   - Bot detection (blocks non-whitelisted bots; allows Google/Bing crawlers)
   - DDoS shield (SQL injection, XSS, common attack patterns)
@@ -24,6 +26,7 @@ A **production-ready**, secure Node.js/Express REST API for user authentication,
 - **Input validation**: Zod schemas on all endpoints (email, password strength, ID validation)
 
 ### 📊 **Observability & Logging**
+
 - **Winston**: Structured JSON logging to disk + console
   - Error logs: `logs/error.log`
   - Combined logs: `logs/combined.log`
@@ -31,24 +34,28 @@ A **production-ready**, secure Node.js/Express REST API for user authentication,
 - **Health check endpoint**: Uptime, status, timestamp
 
 ### 🚀 **Modern Stack**
+
 - **Express 5**: Latest features with async/await middleware
 - **Drizzle ORM**: Type-safe, edge-friendly database queries
 - **Neon PostgreSQL**: Serverless, branch-based development, auto-scaling
 - **Node 22**: Native ESM, latest performance improvements
 
 ### 📦 **Containerized & Cloud-Ready**
+
 - **Multi-stage Dockerfile**: Optimized prod & dev images (Alpine Linux)
 - **Docker Compose**: Dev with Neon Local, Prod with Neon Cloud
 - **Docker Hub**: Automated pushes for `main` branch (multi-platform: amd64, arm64)
 - **Hot-reload dev environment**: File watching with `--watch` flag
 
 ### ✅ **Testing & Quality**
+
 - **Jest** with ESM support (`NODE_OPTIONS='--experimental-vm-modules'`)
 - **Supertest**: HTTP assertion library for endpoint testing
 - **Coverage reports**: LCOV HTML reports; tracked across runs
 - **ESLint + Prettier**: Auto-formatting and linting on every PR
 
 ### 🔄 **Automated CI/CD Pipelines**
+
 See [CI/CD Workflows](#ci-cd-workflows) below.
 
 ---
@@ -56,23 +63,25 @@ See [CI/CD Workflows](#ci-cd-workflows) below.
 ## 🛠️ Tech Stack
 
 ### Core Dependencies
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `express` | ^5.1.0 | HTTP framework |
-| `@neondatabase/serverless` | ^1.0.2 | Neon DB client |
-| `drizzle-orm` | ^0.44.6 | Type-safe ORM |
-| `@arcjet/node` | ^1.0.0-beta.13 | Bot/rate-limit protection |
-| `helmet` | ^8.1.0 | HTTP header security |
-| `bcrypt` | ^6.0.0 | Password hashing |
-| `jsonwebtoken` | ^9.0.2 | JWT signing/verification |
-| `zod` | ^4.1.12 | Input schema validation |
-| `winston` | ^3.18.3 | Structured logging |
-| `morgan` | ^1.10.1 | HTTP request logging |
-| `cookie-parser` | ^1.4.7 | Cookie middleware |
-| `cors` | ^2.8.5 | CORS middleware |
-| `dotenv` | ^17.2.3 | Environment variables |
+
+| Package                    | Version        | Purpose                   |
+| -------------------------- | -------------- | ------------------------- |
+| `express`                  | ^5.1.0         | HTTP framework            |
+| `@neondatabase/serverless` | ^1.0.2         | Neon DB client            |
+| `drizzle-orm`              | ^0.44.6        | Type-safe ORM             |
+| `@arcjet/node`             | ^1.0.0-beta.13 | Bot/rate-limit protection |
+| `helmet`                   | ^8.1.0         | HTTP header security      |
+| `bcrypt`                   | ^6.0.0         | Password hashing          |
+| `jsonwebtoken`             | ^9.0.2         | JWT signing/verification  |
+| `zod`                      | ^4.1.12        | Input schema validation   |
+| `winston`                  | ^3.18.3        | Structured logging        |
+| `morgan`                   | ^1.10.1        | HTTP request logging      |
+| `cookie-parser`            | ^1.4.7         | Cookie middleware         |
+| `cors`                     | ^2.8.5         | CORS middleware           |
+| `dotenv`                   | ^17.2.3        | Environment variables     |
 
 ### Dev Dependencies
+
 - `jest`, `supertest` — Testing framework & HTTP assertions
 - `drizzle-kit` — DB migrations & schema generation
 - `eslint`, `prettier` — Code quality & formatting
@@ -82,6 +91,7 @@ See [CI/CD Workflows](#ci-cd-workflows) below.
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 20+ (or 22 recommended)
 - npm or yarn
 - Docker & Docker Compose (for containerized runs)
@@ -161,12 +171,14 @@ npm run dev:docker
 ```
 
 This runs [scripts/dev.sh](scripts/dev.sh), which:
+
 1. Spins up Neon Local proxy (port 5432)
 2. Starts app container with hot-reload
 3. Runs schema migrations automatically
 4. Streams logs to foreground
 
 **Access**:
+
 - API: http://localhost:3000
 - Database: `postgres://neon:npg@localhost:5432/appdb`
 
@@ -181,6 +193,7 @@ npm run prod:docker
 ```
 
 This runs [scripts/prod.sh](scripts/prod.sh), which:
+
 1. Builds optimized production image (no dev deps)
 2. Connects to Neon Cloud via `DATABASE_URL`
 3. Runs migrations inside container
@@ -206,16 +219,19 @@ docker compose -f docker-compose.prod.yml up \
 ```http
 GET /health
 ```
+
 Returns: `{ status: "OK", timestamp: "...", uptime: 42.3 }`
 
 ```http
 GET /api
 ```
+
 Returns: `{ message: "Acquisitions API is running" }`
 
 ### Authentication
 
 #### Sign Up
+
 ```http
 POST /api/auth/sign-up
 Content-Type: application/json
@@ -228,7 +244,8 @@ Content-Type: application/json
 }
 ```
 
-**Response (201)**: 
+**Response (201)**:
+
 ```json
 {
   "message": "User registered successfully",
@@ -244,6 +261,7 @@ Content-Type: application/json
 **Set-Cookie**: `token=<jwt>; HttpOnly; Secure; SameSite=Strict; Max-Age=900`
 
 #### Sign In
+
 ```http
 POST /api/auth/sign-in
 Content-Type: application/json
@@ -257,6 +275,7 @@ Content-Type: application/json
 **Response (200)**: Same as sign-up + cookie set
 
 #### Sign Out
+
 ```http
 POST /api/auth/sign-out
 Cookie: token=<jwt>
@@ -269,6 +288,7 @@ Cookie: token=<jwt>
 **All require**: Valid JWT cookie + `"Authorization: Bearer <token>"` header (or cookie)
 
 #### Get All Users
+
 ```http
 GET /api/users
 Cookie: token=<jwt>
@@ -277,6 +297,7 @@ Cookie: token=<jwt>
 **Auth**: Admin only
 
 **Response (200)**:
+
 ```json
 {
   "message": "Successfully retrieved users",
@@ -286,6 +307,7 @@ Cookie: token=<jwt>
 ```
 
 #### Get User by ID
+
 ```http
 GET /api/users/1
 Cookie: token=<jwt>
@@ -296,6 +318,7 @@ Cookie: token=<jwt>
 **Response (200)**: User object with id, name, email, role, createdAt, updatedAt
 
 #### Update User
+
 ```http
 PUT /api/users/1
 Cookie: token=<jwt>
@@ -312,6 +335,7 @@ Content-Type: application/json
 **Response (200)**: Updated user object
 
 #### Delete User
+
 ```http
 DELETE /api/users/2
 Cookie: token=<jwt>
@@ -326,29 +350,34 @@ Cookie: token=<jwt>
 ## 🔐 Security Details
 
 ### Password Storage
+
 - Hashed with **bcrypt** (10 rounds, ~100ms per hash)
 - Never stored in plaintext
 - Compared securely on sign-in
 
 ### JWT Tokens
+
 - **Payload**: `{ id, email, role }`
 - **Expiry**: 1 day
 - **Secret**: Loaded from `JWT_SECRET` env var
 - **Storage**: Secure HTTP-only cookie (can't be accessed by JavaScript)
 
 ### Rate Limiting (Arcjet)
-| Role | Limit | Window |
-|------|-------|--------|
-| Guest | 5 req | 1 min |
-| User | 10 req | 1 min |
-| Admin | 20 req | 1 min |
+
+| Role  | Limit  | Window |
+| ----- | ------ | ------ |
+| Guest | 5 req  | 1 min  |
+| User  | 10 req | 1 min  |
+| Admin | 20 req | 1 min  |
 
 ### Bot Detection (Arcjet)
+
 - ✅ **Whitelisted**: Google, Bing, other search engines
 - ❌ **Blocked**: Unknown bots
 - 🛡️ **Shield**: Protects against SQL injection, XSS, CSRF
 
 ### CORS
+
 - Strict origin validation
 - Credentials allowed (cookies)
 - Safe methods: GET, HEAD, OPTIONS
@@ -358,14 +387,17 @@ Cookie: token=<jwt>
 ## 🧪 Testing
 
 ### Run Tests
+
 ```bash
 npm test
 ```
 
 ### Test File Location
+
 - [tests/app.test.js](tests/app.test.js): Endpoint tests (health, API status, 404)
 
 ### Coverage
+
 ```bash
 npm test
 # ✅ Generates: coverage/lcov-report/index.html
@@ -373,10 +405,12 @@ npm test
 ```
 
 ### Test Environment
+
 - `NODE_ENV=test` (Arcjet bypassed for deterministic tests)
 - `DATABASE_URL=postgres://testuser:testpass@localhost/testdb` (in-memory or docker-based)
 
 ### Add More Tests
+
 ```javascript
 describe('POST /api/auth/sign-up', () => {
   it('should register a new user', async () => {
@@ -385,7 +419,7 @@ describe('POST /api/auth/sign-up', () => {
       .send({
         name: 'Test User',
         email: 'test@example.com',
-        password: 'TestPass123'
+        password: 'TestPass123',
       })
       .expect(201);
 
@@ -400,6 +434,7 @@ describe('POST /api/auth/sign-up', () => {
 ## 🗄️ Database & Migrations
 
 ### Schema
+
 Single table: `users`
 | Column | Type | Default |
 |--------|------|---------|
@@ -414,22 +449,27 @@ Single table: `users`
 ### Drizzle Migrations
 
 Generate migration from TypeScript schema:
+
 ```bash
 npm run db:generate
 ```
 
 Run pending migrations:
+
 ```bash
 npm run db:migrate
 ```
 
 Open Drizzle Studio (GUI for DB):
+
 ```bash
 npm run db:studio
 ```
 
 ### Drizzle Configuration
+
 [drizzle.config.js](drizzle.config.js) points to:
+
 - Schema: `src/models/user.model.js`
 - Output: `drizzle/` (migrations + metadata)
 - Database: Neon Cloud or Local via `DATABASE_URL`
@@ -445,6 +485,7 @@ All pipelines automate on **push to `main` or `staging`** + **pull requests**.
 **Triggers**: Every PR + push to main/staging
 
 **Steps**:
+
 1. Checkout code
 2. Setup Node.js 20
 3. Install dependencies
@@ -459,6 +500,7 @@ All pipelines automate on **push to `main` or `staging`** + **pull requests**.
 **Triggers**: Every PR + push to main/staging
 
 **Steps**:
+
 1. Checkout code
 2. Setup Node.js 20
 3. Install dependencies
@@ -475,11 +517,13 @@ All pipelines automate on **push to `main` or `staging`** + **pull requests**.
 **Triggers**: Push to `main` only (or manual via `workflow_dispatch`)
 
 **Prerequisites**:
+
 - Docker Hub credentials in GitHub Secrets:
   - `DOCKER_USERNAME`
   - `DOCKER_PASSWORD`
 
 **Steps**:
+
 1. Checkout code
 2. Setup Docker Buildx (multi-platform builder)
 3. Authenticate to Docker Hub
@@ -490,6 +534,7 @@ All pipelines automate on **push to `main` or `staging`** + **pull requests**.
 6. Publish summary to GitHub
 
 **Image Tags**:
+
 - `tag:main` (branch name)
 - `tag:sha-abc123def` (commit SHA, truncated)
 - `tag:latest` (stable alias)
@@ -565,12 +610,14 @@ All pipelines automate on **push to `main` or `staging`** + **pull requests**.
 ## 👨‍💻 Development
 
 ### Local Setup & Hot Reload
+
 ```bash
 npm run dev
 # ✅ Auto-restarts on file changes
 ```
 
 ### Linting & Formatting
+
 ```bash
 # Check code style
 npm run lint
@@ -582,6 +629,7 @@ npm run format
 ```
 
 ### Database Migrations
+
 ```bash
 # Generate migration from schema changes
 npm run db:generate
@@ -596,6 +644,7 @@ npm run db:studio
 ### Environment Variables
 
 Create `.env` in root:
+
 ```bash
 PORT=3000
 NODE_ENV=development
@@ -605,6 +654,7 @@ ARCJET_KEY=your-key
 ```
 
 **Never commit** `.env` files; add to `.gitignore`:
+
 ```
 .env
 .env.local
@@ -618,6 +668,7 @@ ARCJET_KEY=your-key
 ### Option 1: Docker Hub + Cloud Platform
 
 1. **Build & Push** (automated on `main` via CI/CD):
+
    ```bash
    # Manual push (if needed):
    docker buildx build --push \
@@ -677,6 +728,7 @@ sudo systemctl status acquisitions
 Connect GitHub repo; platform auto-deploys on push to `main`.
 
 **Set env vars** in platform dashboard:
+
 - `DATABASE_URL` → Neon Cloud connection string
 - `JWT_SECRET` → Secure random string
 - `ARCJET_KEY` → Your Arcjet key
@@ -687,23 +739,28 @@ Connect GitHub repo; platform auto-deploys on push to `main`.
 ## 🐛 Troubleshooting
 
 ### "Cannot find module '#models/user.model.js'"
+
 - Ensure `package.json` has correct `"imports"` mapping
 - Clear cache: `rm -rf node_modules && npm ci`
 
 ### Arcjet blocks my Postman requests
+
 - In dev, Arcjet may flag client tools as bots
 - Set `ARCJET_MODE=DRY_RUN` temporarily (logs, doesn't block)
 - Or: Whitelist your IP in Arcjet dashboard
 
 ### Tests fail in CI but pass locally
+
 - Ensure `NODE_ENV=test` and `DATABASE_URL` set in workflow
 - Coverage artifacts may reveal missing mocks or edge cases
 
 ### Docker build fails: "Database URL required"
+
 - Ensure `.env.development` or `.env.production` exists OR
 - Pass via `docker run -e DATABASE_URL="..."`
 
 ### Can't connect to Neon Local
+
 - Ensure `NEON_LOCAL=true` in `.env.development`
 - Check running containers: `docker ps`
 - View container logs: `docker logs neon-local`
